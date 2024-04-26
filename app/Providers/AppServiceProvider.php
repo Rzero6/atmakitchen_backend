@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+
     /**
      * Bootstrap any application services.
      */
@@ -24,9 +25,5 @@ class AppServiceProvider extends ServiceProvider
         config(['app.locale', 'id']);
         Carbon::setLocale('id');
         date_default_timezone_set('Asia/Jakarta');
-
-        $this->registerPolicies();
-        // Mapping model to policy
-        Gate::policy('App\Models\Model', 'App\Policies\ModelPolicy');
     }
 }
