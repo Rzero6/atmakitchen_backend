@@ -15,21 +15,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('jabatans')->insert([
-            'nama_jabatan' => 'Owner',
-            'gaji_harian' => 350000,
+        DB::table('roles')->insert([
+            'nama' => 'Customer',
+            'gaji_harian' => 0,
         ]);
-        DB::table('jabatans')->insert([
-            'nama_jabatan' => 'Manager Operasional',
-            'gaji_harian' => 250000,
+        DB::table('roles')->insert([
+            'nama' => 'Staf',
+            'gaji_harian' => 100000,
         ]);
-        DB::table('jabatans')->insert([
-            'nama_jabatan' => 'Admin',
+        DB::table('roles')->insert([
+            'nama' => 'Admin',
             'gaji_harian' => 200000,
         ]);
-        DB::table('jabatans')->insert([
-            'nama_jabatan' => 'Staf',
-            'gaji_harian' => 100000,
+        DB::table('roles')->insert([
+            'nama' => 'Manager Operasional',
+            'gaji_harian' => 250000,
+        ]);
+        DB::table('roles')->insert([
+            'nama' => 'Owner',
+            'gaji_harian' => 350000,
         ]);
 
         ///bahan baku
@@ -168,21 +172,25 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Milky Yoghurty',
             'no_telp' => '08218899910',
         ]);
-        ///Karyawan
-        DB::table('karyawans')->insert([
-            'id' => 'ADM001',
-            'id_jabatan' => 3,
-            'nama' => 'Admin',
-            'password' => bcrypt('admin'),
-        ]);
         ///User
-        DB::table('customers')->insert([
+        DB::table('users')->insert([
             'nama' => 'Test User',
             'password' => bcrypt('test'),
             'email' => 'test@test.com',
+            'id_role' => 1,
+        ]);
+        DB::table('customers')->insert([
+            'id_user' => 1,
             'tanggal_lahir' => '2023-01-01',
             'promo_poin' => 0,
             'saldo' => 0,
+        ]);
+        ///Karyawan
+        DB::table('users')->insert([
+            'nama' => 'Admin',
+            'password' => bcrypt('admin'),
+            'email' => 'admin@admin.com',
+            'id_role' => 3,
         ]);
     }
 }

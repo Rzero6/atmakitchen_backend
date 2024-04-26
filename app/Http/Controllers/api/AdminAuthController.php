@@ -14,7 +14,7 @@ class AdminAuthController extends Controller
         $loginData = $request->all();
 
         $validate = Validator::make($loginData, [
-            "id" => "required",
+            "email" => "required|email:rfc,dns",
             "password" => "required",
         ]);
 
@@ -24,18 +24,20 @@ class AdminAuthController extends Controller
             ], 400);
         }
 
-        if (!Auth::guard('admin')->attempt(['id' => $loginData['id'], 'password' => $loginData['password']])) {
+        if (!Auth::attempt($loginData)) {
             return response()->json([
-                'message' => 'ID atau Password salah',
+                'message' => 'Email atau Password salah',
             ], 401);
         }
 
-        /** @var \App\Models\Karyawan $karyawan **/
-        $token = $karyawan->createToken('Authentication Token')->accessToken;
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+
+        $token = $user->createToken('Authentication Token')->accessToken;
 
         return response()->json([
             'message' => 'Authenticated',
-            'karyawan' => $karyawan,
+            'user' => $user,
             'token_type' => 'Bearer',
             'access_token' => $token,
         ], 200);

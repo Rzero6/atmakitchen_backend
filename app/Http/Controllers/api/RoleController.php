@@ -5,18 +5,18 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Models\Jabatan;
+use App\Models\Role;
 
-class JabatanController extends Controller
+class RoleController extends Controller
 {
     public function index()
     {
         try {
-            $jabatan = Jabatan::all();
+            $role = Role::all();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
-                "data" => $jabatan
+                "data" => $role
             ], 200); //status code 200 = success
         } catch (\Exception $e) {
             return response()->json([
@@ -35,17 +35,17 @@ class JabatanController extends Controller
         try {
             $storeData = $request->all();
             $validate = Validator::make($storeData, [
-                'nama_jabatan' => 'required|max:25',
+                'nama' => 'required|max:25',
                 'gaji_harian' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-            $jabatan = Jabatan::create($request->all());
+            $role = Role::create($request->all());
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',
-                "data" => $jabatan
+                "data" => $role
             ], 200); //status code 200 = success
         } catch (\Exception $e) {
             return response()->json([
@@ -62,14 +62,14 @@ class JabatanController extends Controller
     public function show($id)
     {
         try {
-            $jabatan = Jabatan::find($id);
+            $role = Role::find($id);
 
-            if (!$jabatan) throw new \Exception("Jabatan tidak ditemukan");
+            if (!$role) throw new \Exception("Role tidak ditemukan");
 
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
-                "data" => $jabatan
+                "data" => $role
             ], 200); //status code 200 = success
         } catch (\Exception $e) {
             return response()->json([
@@ -86,22 +86,22 @@ class JabatanController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $jabatan = Jabatan::find($id);
+            $role = Role::find($id);
 
-            if (!$jabatan) throw new \Exception("Jabatan tidak ditemukan");
+            if (!$role) throw new \Exception("Role tidak ditemukan");
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
-                'nama_jabatan' => 'required|max:25',
+                'nama' => 'required|max:25',
                 'gaji_harian' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-            $jabatan->update($updatedData);
+            $role->update($updatedData);
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil update data',
-                "data" => $jabatan
+                "data" => $role
             ], 200); //status code 200 = success
         } catch (\Exception $e) {
             return response()->json([
@@ -118,15 +118,15 @@ class JabatanController extends Controller
     public function destroy($id)
     {
         try {
-            $jabatan = Jabatan::find($id);
+            $role = Role::find($id);
 
-            if (!$jabatan) throw new \Exception("Jabatan tidak ditemukan");
+            if (!$role) throw new \Exception("Role tidak ditemukan");
 
-            $jabatan->delete();
+            $role->delete();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil hapus data',
-                "data" => $jabatan
+                "data" => $role
             ], 200); //status code 200 = success
         } catch (\Exception $e) {
             return response()->json([

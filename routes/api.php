@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PenitipController;
 use App\Http\Controllers\api\UserAuthController;
+use App\Http\Middleware\RoleMiddleware;
 
-Route::post("/admin/login", [AdminAuthController::class, "login"]);
 Route::post("/login", [UserAuthController::class, "login"]);
-Route::middleware('auth:admin')->group(function () {
+Route::post("/admin/login", [AdminAuthController::class, "login"]);
+Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
 
     Route::get('/penitip', [PenitipController::class, 'index']);
     Route::post('/penitip', [PenitipController::class, 'store']);
