@@ -19,19 +19,11 @@ class CustomerController extends Controller
                 // Check if the user is null
                 if ($customer->user) {
                     return [
-                        'id_costumer' => $customer->id,
+                        'id' => $customer->id,
                         'id_user' => $customer->user->id,
                         'nama' => $customer->user->nama,
                         'email' => $customer->user->email,
                         'tanggal_lahir' => $customer->tanggal_lahir,
-                    ];
-                } else {
-                    return [
-                        'id' => $customer->id,
-                        'name' => $customer->name,
-                        'email' => null,
-                        'user_name' => null,
-                        // Add other customer attributes if needed
                     ];
                 }
             });
