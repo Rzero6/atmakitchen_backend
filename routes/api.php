@@ -6,6 +6,7 @@ use App\Http\Controllers\api\PengeluaranLainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PenitipController;
+use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserAuthController;
 use App\Http\Middleware\RoleMiddleware;
 
@@ -30,4 +31,11 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::get('/bahanBaku/{id}', [BahanBakuController::class, 'show']);
     Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
     Route::delete('/bahanBaku/{id}', [BahanBakuController::class, 'destroy']);
+
+    Route::post('/role', [RoleController::class, 'store']);
+    Route::get('/role/{id}', [RoleController::class, 'show']);
+    Route::put('/role/{id}', [RoleController::class, 'update']);
+    Route::delete('/role/{id}', [RoleController::class, 'destroy']);
 });
+
+Route::get('/role', [RoleController::class, 'index']);

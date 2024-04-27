@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users', 'id')->onDelete('cascade');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('verify_key');
-            $table->date('tanggal_lahir');
-            $table->integer('promo_poin');
-            $table->float('saldo');
-            $table->string('profil_pic')->nullable();
+            $table->float('gaji_harian');
+            $table->float('bonus');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('karyawans');
     }
 };

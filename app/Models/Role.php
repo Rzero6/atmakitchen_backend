@@ -10,6 +10,5 @@ class Role extends Model
     use HasFactory;
     protected $fillable = [
         'nama',
-        'gaji_harian',
     ];
 }

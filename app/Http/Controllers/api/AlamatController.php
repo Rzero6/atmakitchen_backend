@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Alamat;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,7 +47,7 @@ class AlamatController extends Controller
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-            $customer = User::find($storeData['id_customer']);
+            $customer = Customer::find($storeData['id_customer']);
             if (!$customer) throw new \Exception("Customer tidak ditemukan");
             $alamat = Alamat::create($request->all());
             return response()->json([
@@ -108,7 +109,7 @@ class AlamatController extends Controller
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-            $customer = User::find($updatedData['id_customer']);
+            $customer = Customer::find($updatedData['id_customer']);
             if (!$customer) throw new \Exception("Customer tidak ditemukan");
             $alamat->update($updatedData);
             return response()->json([

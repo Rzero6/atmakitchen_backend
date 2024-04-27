@@ -16,24 +16,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('roles')->insert([
-            'nama' => 'Customer',
-            'gaji_harian' => 0,
-        ]);
-        DB::table('roles')->insert([
-            'nama' => 'Staf',
-            'gaji_harian' => 100000,
-        ]);
-        DB::table('roles')->insert([
-            'nama' => 'Admin',
-            'gaji_harian' => 200000,
+            'nama' => 'Owner',
         ]);
         DB::table('roles')->insert([
             'nama' => 'Manager Operasional',
-            'gaji_harian' => 250000,
         ]);
         DB::table('roles')->insert([
-            'nama' => 'Owner',
-            'gaji_harian' => 350000,
+            'nama' => 'Admin',
+        ]);
+        DB::table('roles')->insert([
+            'nama' => 'Staf',
+        ]);
+        DB::table('roles')->insert([
+            'nama' => 'Customer',
         ]);
 
         ///bahan baku
@@ -172,25 +167,68 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Milky Yoghurty',
             'no_telp' => '08218899910',
         ]);
+        ///Karyawan
+        DB::table('users')->insert([
+            'nama' => 'Greyla',
+            'password' => bcrypt('owner'),
+            'email' => 'owner@atmakitchen.com',
+            'id_role' => 1,
+        ]);
+        DB::table('karyawans')->insert([
+            'id_user' => 1,
+            'gaji_harian' => 350000,
+            'bonus' => 250000,
+        ]);
+
+        DB::table('users')->insert([
+            'nama' => 'Lala',
+            'password' => bcrypt('lala'),
+            'email' => 'lala@atmakitchen.com',
+            'id_role' => 2,
+        ]);
+        DB::table('karyawans')->insert([
+            'id_user' => 2,
+            'gaji_harian' => 250000,
+            'bonus' => 175000,
+        ]);
+
+        DB::table('users')->insert([
+            'nama' => 'Rey',
+            'password' => bcrypt('rey'),
+            'email' => 'rey@atmakitchen.com',
+            'id_role' => 3,
+        ]);
+        DB::table('karyawans')->insert([
+            'id_user' => 3,
+            'gaji_harian' => 200000,
+            'bonus' => 150000,
+        ]);
+
+        DB::table('users')->insert([
+            'nama' => 'Gre',
+            'password' => bcrypt('gre'),
+            'email' => 'gre@atmakitchen.com',
+            'id_role' => 4,
+        ]);
+        DB::table('karyawans')->insert([
+            'id_user' => 4,
+            'gaji_harian' => 100000,
+            'bonus' => 100000,
+        ]);
+
         ///User
         DB::table('users')->insert([
             'nama' => 'Test User',
             'password' => bcrypt('test'),
             'email' => 'test@test.com',
-            'id_role' => 1,
+            'id_role' => 5,
         ]);
         DB::table('customers')->insert([
-            'id_user' => 1,
+            'id_user' => 5,
             'tanggal_lahir' => '2023-01-01',
             'promo_poin' => 0,
             'saldo' => 0,
-        ]);
-        ///Karyawan
-        DB::table('users')->insert([
-            'nama' => 'Admin',
-            'password' => bcrypt('admin'),
-            'email' => 'admin@admin.com',
-            'id_role' => 3,
+            'verify_key' => 'test',
         ]);
     }
 }

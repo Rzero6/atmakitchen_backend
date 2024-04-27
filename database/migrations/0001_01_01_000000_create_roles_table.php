@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->float('gaji_harian')->nullable();
             $table->timestamps();
         });
     }
