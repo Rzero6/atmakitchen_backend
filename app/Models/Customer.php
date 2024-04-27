@@ -16,4 +16,8 @@ class Customer extends Model
         'profil_pic',
         'verify_key',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
 }
