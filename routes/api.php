@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\AdminAuthController;
 use App\Http\Controllers\api\BahanBakuController;
+use App\Http\Controllers\api\CustomerController;
 use App\Http\Controllers\api\PengeluaranLainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ use App\Http\Middleware\RoleMiddleware;
 Route::post("/login", [UserAuthController::class, "login"]);
 Route::post("/admin/login", [AdminAuthController::class, "login"]);
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
+
+    Route::get('/customer', [CustomerController::class, 'index']);
 
     Route::get('/penitip', [PenitipController::class, 'index']);
     Route::post('/penitip', [PenitipController::class, 'store']);
