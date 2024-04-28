@@ -18,6 +18,7 @@ class CustomerController extends Controller
                 if ($customer->user) {
                     return [
                         'id' => $customer->id,
+                        'id' => $customer->id,
                         'id_user' => $customer->user->id,
                         'nama' => $customer->user->nama,
                         'email' => $customer->user->email,
