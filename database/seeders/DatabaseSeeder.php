@@ -225,6 +225,7 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('customers')->insert([
             'id_user' => 5,
+            'no_telepon' => '0812312231',
             'tanggal_lahir' => '2023-01-01',
             'promo_poin' => 0,
             'saldo' => 0,
