@@ -11,12 +11,10 @@ class CustomerController extends Controller
     public function index()
     {
         try {
-            // Retrieve customers along with their associated users
+
             $customers = Customer::with('user')->get();
 
-            // Format the response JSON
             $formattedCustomers = $customers->map(function ($customer) {
-                // Check if the user is null
                 if ($customer->user) {
                     return [
                         'id' => $customer->id,
@@ -25,6 +23,8 @@ class CustomerController extends Controller
                         'email' => $customer->user->email,
                         'tanggal_lahir' => $customer->tanggal_lahir,
                     ];
+                } else {
+                    throw new \Exception("User tidak ditemukan");
                 }
             });
 
@@ -32,13 +32,13 @@ class CustomerController extends Controller
                 "status" => true,
                 "message" => 'Berhasil ambil data',
                 "data" => $formattedCustomers
-            ], 200); // Status code 200 = success
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,
                 "message" => $e->getMessage(),
                 "data" => []
-            ], 400); // Status code 400 = bad request
+            ], 400);
         }
     }
 }
