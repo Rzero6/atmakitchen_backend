@@ -12,6 +12,7 @@ use App\Http\Controllers\api\UserAuthController;
 use App\Http\Middleware\RoleMiddleware;
 
 Route::post("/login", [UserAuthController::class, "login"]);
+Route::post("/register", [UserAuthController::class, "register"]);
 Route::post("/admin/login", [AdminAuthController::class, "login"]);
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
 
