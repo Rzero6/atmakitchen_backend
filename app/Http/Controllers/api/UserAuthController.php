@@ -59,7 +59,8 @@ class UserAuthController extends Controller
             Mail::to($user->email)->send(new MailSend($details));
             return response()->json([
                 'message' => 'Link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk mengaktifkan akun.',
-                'data' => $user
+                'data' => $user,
+                'customer' => $customer,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
