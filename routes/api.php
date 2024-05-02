@@ -7,6 +7,7 @@ use App\Http\Controllers\api\PengeluaranLainController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PenitipController;
+use App\Http\Controllers\api\resetPasswordController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserAuthController;
 use App\Http\Middleware\RoleMiddleware;
@@ -14,6 +15,7 @@ use App\Http\Middleware\RoleMiddleware;
 Route::post("/login", [UserAuthController::class, "login"]);
 Route::post("/register", [UserAuthController::class, "register"]);
 Route::post("/admin/login", [AdminAuthController::class, "login"]);
+Route::post("/password/reset", [resetPasswordController::class, "requestResetPassword"]);
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
 
     Route::get('/customer', [CustomerController::class, 'index']);
