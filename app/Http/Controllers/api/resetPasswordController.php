@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Mail\MailSend;
 use App\Mail\ResetPasswordMail;
+use App\Models\Customer;
 use App\Models\ResetPasswordToken;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,7 +28,10 @@ class resetPasswordController extends Controller
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $user = User::where('email', $request->email)->first();
-            if (!$user) throw new \Exception("Customer tidak ditemukan");
+            if (!$user) throw new \Exception("User tidak ditemukan");
+            $customer = Customer::where('id_user', $user->id)->first();
+            if (!$customer) throw new \Exception("Customer tidak ditemukan");
+            if (!$customer->email_verified_at) throw new \Exception("Email belum diverifikasi. Verifikasi email terlebih dulu!");
             $oldToken = ResetPasswordToken::where('id_user', $user->id)->first();
             if ($oldToken) $oldToken->delete();
 
