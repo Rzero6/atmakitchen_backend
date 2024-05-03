@@ -35,127 +35,106 @@ class DatabaseSeeder extends Seeder
         DB::table('bahan_bakus')->insert([
             'nama' => 'Butter',
             'stok' => 10000,
-            'harga' => 120,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Creamer',
             'stok' => 30000,
-            'harga' => 70,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Telur',
             'stok' => 60000,
-            'harga' => 33,
             'satuan' => 'buah',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Gula Pasir',
             'stok' => 80000,
-            'harga' => 27,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Susu Bubuk',
             'stok' => 5000,
-            'harga' => 120,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Tepung Terigu',
             'stok' => 36000,
-            'harga' => 15,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Garam',
             'stok' => 2000,
-            'harga' => 16,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Coklat Bubuk',
             'stok' => 10000,
-            'harga' => 150,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Selai Strawberry',
             'stok' => 5000,
-            'harga' => 100,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Coklat Batang',
             'stok' => 50000,
-            'harga' => 80,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Minyak Goreng',
             'stok' => 5000,
-            'harga' => 16,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Tepung Maizena',
             'stok' => 30000,
-            'harga' => 21,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Baking Powder',
             'stok' => 100,
-            'harga' => 300,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Kacang Kenari',
             'stok' => 4000,
-            'harga' => 400,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Ragi',
             'stok' => 2000,
-            'harga' => 230,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Susu Cair',
             'stok' => 15000,
-            'harga' => 20,
             'satuan' => 'ml',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Sosis Blackpaper',
             'stok' => 1000,
-            'harga' => 3000,
             'satuan' => 'buah',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Whipped Cream',
             'stok' => 10000,
-            'harga' => 250,
             'satuan' => 'ml',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Susu Full Cream',
             'stok' => 3000,
-            'harga' => 20,
             'satuan' => 'ml',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Keju Mozarella',
             'stok' => 20000,
-            'harga' => 240,
             'satuan' => 'gr',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Matcha Bubuk',
             'stok' => 4000,
-            'harga' => 250,
             'satuan' => 'gr',
         ]);
         ///Penitip
@@ -170,6 +149,7 @@ class DatabaseSeeder extends Seeder
         ///Karyawan
         DB::table('users')->insert([
             'nama' => 'Greyla',
+            'no_telepon' => '0811111111',
             'password' => bcrypt('owner'),
             'email' => 'owner@atmakitchen.com',
             'id_role' => 1,
@@ -182,6 +162,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'nama' => 'Lala',
+            'no_telepon' => '082225553400',
             'password' => bcrypt('lala'),
             'email' => 'lala@atmakitchen.com',
             'id_role' => 2,
@@ -194,6 +175,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'nama' => 'Rey',
+            'no_telepon' => '085799689430',
             'password' => bcrypt('rey'),
             'email' => 'rey@atmakitchen.com',
             'id_role' => 3,
@@ -206,6 +188,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'nama' => 'Gre',
+            'no_telepon' => '081327389023',
             'password' => bcrypt('gre'),
             'email' => 'gre@atmakitchen.com',
             'id_role' => 4,
@@ -219,13 +202,13 @@ class DatabaseSeeder extends Seeder
         ///User
         DB::table('users')->insert([
             'nama' => 'Test User',
+            'no_telepon' => '0812312231',
             'password' => bcrypt('test'),
             'email' => 'test@test.com',
             'id_role' => 5,
         ]);
         DB::table('customers')->insert([
             'id_user' => 5,
-            'no_telepon' => '0812312231',
             'tanggal_lahir' => '2023-01-01',
             'promo_poin' => 0,
             'saldo' => 0,

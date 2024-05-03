@@ -22,7 +22,7 @@ class UserAuthController extends Controller
             $registrationData = $request->all();
             $validate = Validator::make($registrationData, [
                 'nama' => 'required',
-                'email' => 'required|email:rfc,dns|unique:users',
+                'email' => 'required|email:rfc,dns|unique:users,email',
                 'password' => 'required|min:8',
                 'tanggal_lahir' => 'required|date_format:Y-m-d',
                 'no_telepon' => 'required|max:15',
@@ -34,6 +34,7 @@ class UserAuthController extends Controller
             $userData = [
                 'nama' => $registrationData['nama'],
                 'email' => $registrationData['email'],
+                'no_telepon' => $registrationData['no_telepon'],
                 'password' => bcrypt($request->password),
                 'id_role' => 5,
             ];
@@ -41,7 +42,6 @@ class UserAuthController extends Controller
 
             $customerData = [
                 'id_user' => $user->id,
-                'no_telepon' => $registrationData['no_telepon'],
                 'verify_key' => $str,
                 'tanggal_lahir' => $registrationData['tanggal_lahir'],
                 'promo_poin' => 0,
@@ -123,5 +123,35 @@ class UserAuthController extends Controller
             'token_type' => 'Bearer',
             'access_token' => $token,
         ], 200);
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) throw new \Exception("Karyawan tidak ditemukan");
+            $updatedData = $request->all();
+            $validate = Validator::make($updatedData, [
+                'password' => 'required|min:8',
+            ]);
+            if ($validate->fails()) {
+                return response()->json(['message' => $validate->errors()], 400);
+            }
+            $userData = [
+                'password' => bcrypt($updatedData['password'])
+            ];
+            $user->update($userData);
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil ganti password',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
     }
 }

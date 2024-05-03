@@ -38,7 +38,6 @@ class BahanBakuController extends Controller
                 'nama' => 'required|max:50',
                 'stok' => 'required',
                 'satuan' => 'required|max:10',
-                'harga' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
@@ -96,7 +95,6 @@ class BahanBakuController extends Controller
                 'nama' => 'required|max:50',
                 'stok' => 'required',
                 'satuan' => 'required|max:10',
-                'harga' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
