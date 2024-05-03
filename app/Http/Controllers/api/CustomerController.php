@@ -22,7 +22,7 @@ class CustomerController extends Controller
                         'nama' => $customer->user->nama,
                         'email' => $customer->user->email,
                         'tanggal_lahir' => $customer->tanggal_lahir,
-                        'no_telepon' => $customer->no_telepon,
+                        'no_telepon' => $customer->user->no_telepon,
                     ];
                 } else {
                     throw new \Exception("User tidak ditemukan");
