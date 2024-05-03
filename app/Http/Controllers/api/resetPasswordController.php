@@ -48,6 +48,7 @@ class resetPasswordController extends Controller
             ];
             Mail::to($user->email)->send(new ResetPasswordMail($details));
             return response()->json([
+                'status' => true,
                 'message' => 'Link Reset Password telah dikirim ke email anda. Silahkan cek email anda untuk mereset password.'
             ], 200);
         } catch (\Exception $e) {

@@ -20,6 +20,17 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
 
     Route::get('/customer', [CustomerController::class, 'index']);
 
+    Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
+    Route::post('/bahanBaku', [BahanBakuController::class, 'store']);
+    Route::get('/bahanBaku/{id}', [BahanBakuController::class, 'show']);
+    Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
+    Route::delete('/bahanBaku/{id}', [BahanBakuController::class, 'destroy']);
+
+});
+Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])->group(function () {
+
+    Route::get('/customer', [CustomerController::class, 'index']);
+
     Route::get('/penitip', [PenitipController::class, 'index']);
     Route::post('/penitip', [PenitipController::class, 'store']);
     Route::get('/penitip/{id}', [PenitipController::class, 'show']);
@@ -32,16 +43,13 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::put('/pengeluaran/{id}', [PengeluaranLainController::class, 'update']);
     Route::delete('/pengeluaran/{id}', [PengeluaranLainController::class, 'destroy']);
 
-    Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
-    Route::post('/bahanBaku', [BahanBakuController::class, 'store']);
-    Route::get('/bahanBaku/{id}', [BahanBakuController::class, 'show']);
-    Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
-    Route::delete('/bahanBaku/{id}', [BahanBakuController::class, 'destroy']);
-
     Route::post('/role', [RoleController::class, 'store']);
     Route::get('/role/{id}', [RoleController::class, 'show']);
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::delete('/role/{id}', [RoleController::class, 'destroy']);
 });
 
+Route::middleware(['auth:api', RoleMiddleware::class . ':Owner'])->group(function () {
+
+});
 Route::get('/role', [RoleController::class, 'index']);
