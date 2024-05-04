@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         DB::table('bahan_bakus')->insert([
             'nama' => 'Telur',
             'stok' => 60000,
-            'satuan' => 'buah',
+            'satuan' => 'pcs',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Gula Pasir',
@@ -115,7 +115,7 @@ class DatabaseSeeder extends Seeder
         DB::table('bahan_bakus')->insert([
             'nama' => 'Sosis Blackpaper',
             'stok' => 1000,
-            'satuan' => 'buah',
+            'satuan' => 'pcs',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Whipped Cream',
@@ -137,6 +137,37 @@ class DatabaseSeeder extends Seeder
             'stok' => 4000,
             'satuan' => 'gr',
         ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Box 20x20 cm',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Box 20x10 cm',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Botol 1 liter',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Box Premium',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Kartu Ucapan',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+        DB::table('bahan_bakus')->insert([
+            'nama' => 'Tas Spunbond',
+            'stok' => 4000,
+            'satuan' => 'pcs',
+        ]);
+
         ///Penitip
         DB::table('penitips')->insert([
             'nama' => 'Kripick Co.',
@@ -214,5 +245,188 @@ class DatabaseSeeder extends Seeder
             'saldo' => 0,
             'verify_key' => 'test',
         ]);
+        //Produk
+        DB::table('produks')->insert(([
+            'nama' => 'Lapis Legit',
+            'jenis' => 'Cake',
+            'harga' => 850000,
+            'stok' => 0,
+            'ukuran' => 'Satu Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Lapis Legit',
+            'jenis' => 'Cake',
+            'harga' => 450000,
+            'stok' => 0,
+            'ukuran' => 'Setengah Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Lapis Surabaya',
+            'jenis' => 'Cake',
+            'harga' => 550000,
+            'stok' => 0,
+            'ukuran' => 'Satu Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Lapis Surabaya',
+            'jenis' => 'Cake',
+            'harga' => 300000,
+            'stok' => 0,
+            'ukuran' => 'Setengah Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Brownies',
+            'jenis' => 'Cake',
+            'harga' => 250000,
+            'stok' => 0,
+            'ukuran' => 'Satu Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Brownies',
+            'jenis' => 'Cake',
+            'harga' => 150000,
+            'stok' => 0,
+            'ukuran' => 'Setengah Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Mandarin',
+            'jenis' => 'Cake',
+            'harga' => 450000,
+            'stok' => 0,
+            'ukuran' => 'Satu Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Mandarin',
+            'jenis' => 'Cake',
+            'harga' => 250000,
+            'stok' => 0,
+            'ukuran' => 'Setengah Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Spikoe',
+            'jenis' => 'Cake',
+            'harga' => 350000,
+            'stok' => 0,
+            'ukuran' => 'Satu Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Spikoe',
+            'jenis' => 'Cake',
+            'harga' => 200000,
+            'stok' => 0,
+            'ukuran' => 'Setengah Loyang',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Roti Sosis',
+            'jenis' => 'Roti',
+            'harga' => 180000,
+            'stok' => 0,
+            'ukuran' => 'Per Box (isi 10)',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Milk Bun',
+            'jenis' => 'Roti',
+            'harga' => 120000,
+            'stok' => 0,
+            'ukuran' => 'Per Box (isi 10)',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Roti Keju',
+            'jenis' => 'Roti',
+            'harga' => 150000,
+            'stok' => 0,
+            'ukuran' => 'Per Box (isi 10)',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Choco Creamy Latte',
+            'jenis' => 'Minuman',
+            'harga' => 75000,
+            'stok' => 0,
+            'ukuran' => 'Per Liter',
+        ]));
+
+        DB::table('produks')->insert(([
+            'nama' => 'Matcha Creamy Latte',
+            'jenis' => 'Minuman',
+            'harga' => 100000,
+            'stok' => 0,
+            'ukuran' => 'Per Liter',
+        ]));
+
+        DB::table('produks')->insert(([
+            'id_penitip' => 1,
+            'nama' => 'Keripik Kentang',
+            'jenis' => 'Cemilan',
+            'harga' => 75000,
+            'stok' => 64,
+            'ukuran' => 'Per Bungkus 250gr',
+        ]));
+
+        DB::table('produks')->insert(([
+            'id_penitip' => 1,
+            'nama' => 'Kopi Luwak Bubuk',
+            'jenis' => 'Minuman',
+            'harga' => 250000,
+            'stok' => 34,
+            'ukuran' => 'Per Bungkus 250gr',
+        ]));
+
+        DB::table('produks')->insert(([
+            'id_penitip' => 2,
+            'nama' => 'Matcha Organik Bubuk',
+            'jenis' => 'Minuman',
+            'harga' => 300000,
+            'stok' => 67,
+            'ukuran' => 'Per Bungkus 100gr',
+        ]));
+
+        DB::table('produks')->insert(([
+            'id_penitip' => 2,
+            'nama' => 'Chocolate Bar',
+            'jenis' => 'Cemilan',
+            'harga' => 120000,
+            'stok' => 34,
+            'ukuran' => 'Per Bungkus 100gr',
+        ]));
+
+
+        //Produk Hampers
+        DB::table('hampers')->insert(([
+            'nama' => 'Paket A',
+            'id_produk1' => 2,
+            'id_produk2' => 6,
+            'rincian' => 'Lapis Legit Setengah Loyang + Brownies Setengah Loyang + Exclusice box and card',
+            'harga' => 650000,
+        ]));
+
+        DB::table('hampers')->insert(([
+            'nama' => 'Paket B',
+            'id_produk1' => 4,
+            'id_produk2' => 11,
+            'rincian' => 'Lapis Surabaya Setengah Loyang + Roti Sosis + Exclusice box and card',
+            'harga' => 500000,
+        ]));
+
+        DB::table('hampers')->insert(([
+            'nama' => 'Paket C',
+            'id_produk1' => 10,
+            'id_produk2' => 15,
+            'rincian' => 'Spikoe Setengah Loyang + Matcha Creamy Latte + Exclusice box and card',
+            'harga' => 350000,
+        ]));
+
     }
 }

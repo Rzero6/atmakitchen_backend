@@ -5,9 +5,12 @@ use App\Http\Controllers\api\BahanBakuController;
 use App\Http\Controllers\api\CustomerController;
 use App\Http\Controllers\api\KaryawanController;
 use App\Http\Controllers\api\PengeluaranLainController;
+use App\Http\Controllers\api\HampersController;
+use App\Http\Controllers\api\PembelianBahanBakuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PenitipController;
+use App\Http\Controllers\api\ProdukController;
 use App\Http\Controllers\api\resetPasswordController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserAuthController;
@@ -28,6 +31,16 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::get('/bahanBaku/{id}', [BahanBakuController::class, 'show']);
     Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
     Route::delete('/bahanBaku/{id}', [BahanBakuController::class, 'destroy']);
+
+    Route::post('/produk', [ProdukController::class, 'store']);
+    Route::post('/produk', [ProdukController::class, 'storeTanpaPenitip']);
+    Route::put('/produk/{id}', [ProdukController::class, 'update']);
+    Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
+
+    Route::post('/hampers', [HampersController::class, 'store']);
+    Route::put('/hampers/{id}', [HampersController::class, 'update']);
+    Route::delete('/hampers/{id}', [HampersController::class, 'destroy']);
+
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])->group(function () {
 
@@ -50,12 +63,22 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
     Route::delete('/pengeluaran/{id}', [PengeluaranLainController::class, 'destroy']);
 
     Route::post('/role', [RoleController::class, 'store']);
-    Route::get('/role/{id}', [RoleController::class, 'show']);
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::delete('/role/{id}', [RoleController::class, 'destroy']);
+
+    Route::get('/pembelianBahan', [PembelianBahanBakuController::class, 'index']);
+    Route::post('/pembelianBahan', [PembelianBahanBakuController::class, 'store']);
+    Route::get('/pembelianBahan/{id}', [PembelianBahanBakuController::class, 'show']);
+    Route::put('/pembelianBahan/{id}', [PembelianBahanBakuController::class, 'update']);
+    Route::delete('/pembelianBahan/{id}', [PembelianBahanBakuController::class, 'destroy']);
 });
 
 Route::middleware(['auth:api', RoleMiddleware::class . ':Owner'])->group(function () {
     Route::get('/karyawan/gaji-bonus/{id}', [KaryawanController::class, 'updateGajiBonus']);
 });
 Route::get('/role', [RoleController::class, 'index']);
+Route::get('/role/{id}', [RoleController::class, 'show']);
+Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/produk/{id}', [ProdukController::class, 'show']);
+Route::get('/hampers', [HampersController::class, 'index']);
+Route::get('/hampers/{id}', [HampersController::class, 'show']);
