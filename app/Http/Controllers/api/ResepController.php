@@ -38,17 +38,14 @@ class ResepController extends Controller
             $storeData = $request->all();
             $validate = Validator::make($storeData, [
                 'id_produk' => 'required|numeric',
-                'nama_penerima' => 'required|max:50',
-                'no_telepon' => 'required|max:15',
-                'kota' => 'required|max:16',
-                'jalan' => 'required',
-                'rincian' => 'required',
+                'id_bahan_baku' => 'required|numeric',
+                'takaran' => 'required|numeric',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $produk = Produk::find($storeData['id_produk']);
-            if (!$produk) throw new \Exception("Produk tidak ditemukan");
+            if (!$produk) throw new \Exception("Resep tidak ditemukan");
             $resep = Resep::create($request->all());
             return response()->json([
                 "status" => true,
@@ -100,17 +97,14 @@ class ResepController extends Controller
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'id_produk' => 'required|numeric',
-                'nama_penerima' => 'required|max:50',
-                'no_telepon' => 'required|max:15',
-                'kota' => 'required|max:16',
-                'jalan' => 'required',
-                'rincian' => 'required',
+                'id_bahan_baku' => 'required|numeric',
+                'takaran' => 'required|numeric',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $produk = Produk::find($updatedData['id_produk']);
-            if (!$produk) throw new \Exception("Produk tidak ditemukan");
+            if (!$produk) throw new \Exception("Resep tidak ditemukan");
             $resep->update($updatedData);
             return response()->json([
                 "status" => true,
