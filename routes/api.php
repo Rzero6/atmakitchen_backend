@@ -30,6 +30,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post("/customer/update/profil-pic/{id}", [CustomerController::class, "updateProfilPic"]);
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
+
+    Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdCustomer"]);
+    Route::get("/transaksi/{id}", [TransaksiController::class, "show"]);
     Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
