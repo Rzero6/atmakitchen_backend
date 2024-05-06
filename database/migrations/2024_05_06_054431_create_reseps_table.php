@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembelian_bahan_bakus', function (Blueprint $table) {
+        Schema::create('reseps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_bahanBaku')->constrained('bahan_bakus', 'id')->onDelete('cascade');
-            $table->integer('jumlah');
-            $table->date('tglPembelian');
-            $table->float('harga');
+            $table->foreignId('id_produk')->constrained('produks', 'id')->onDelete('cascade');
+            $table->foreignId('id_bahan_baku')->constrained('bahan_bakus', 'id')->onDelete('cascade');
+            $table->integer('takaran');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembelian_bahan_bakus');
+        Schema::dropIfExists('reseps');
     }
 };

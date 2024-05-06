@@ -130,7 +130,7 @@ class UserAuthController extends Controller
         try {
             $user = User::find($id);
 
-            if (!$user) throw new \Exception("Karyawan tidak ditemukan");
+            if (!$user) throw new \Exception("User tidak ditemukan");
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'password' => 'required|min:8',
@@ -141,7 +141,8 @@ class UserAuthController extends Controller
             $userData = [
                 'password' => bcrypt($updatedData['password'])
             ];
-            $user->update($userData);
+            $user->password = $userData['password'];
+            $user->save();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ganti password',

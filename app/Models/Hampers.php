@@ -14,6 +14,7 @@ class Hampers extends Model
         'id_produk2',
         'rincian',
         'harga',
+        'image',
     ];
 
     public function produk1()

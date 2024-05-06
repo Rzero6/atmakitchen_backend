@@ -245,6 +245,15 @@ class DatabaseSeeder extends Seeder
             'saldo' => 0,
             'verify_key' => 'test',
         ]);
+        ///alamat
+        DB::table('alamats')->insert([
+            'id_customer' => 1,
+            'nama_penerima' => 'Test Nama Alamat',
+            'no_telepon' => '0812312231',
+            'kota' => 'Sleman',
+            'jalan' => 'Jalan Babarsari 123',
+            'rincian' => 'Rumah warna merah',
+        ]);
         //Produk
         DB::table('produks')->insert(([
             'nama' => 'Lapis Legit',
@@ -428,5 +437,28 @@ class DatabaseSeeder extends Seeder
             'harga' => 350000,
         ]));
 
+        DB::table('transaksis')->insert(([
+            'id_customer' => 1,
+            'id_alamat' => 1,
+            'tanggal_penerimaan' => '2024-04-24 16:00:00',
+            'status' => 'selesai',
+            'jarak' => 5,
+            'tip' => 50000,
+        ]));
+
+        DB::table('detail_transaksis')->insert(([
+            'id_transaksi' => 1,
+            'id_produk' => 1,
+            'id_hampers' => null,
+            'jumlah' => 2,
+            'subtotal' => 100000,
+        ]));
+        DB::table('detail_transaksis')->insert(([
+            'id_transaksi' => 1,
+            'id_produk' => null,
+            'id_hampers' => 2,
+            'jumlah' => 1,
+            'subtotal' => 200000,
+        ]));
     }
 }

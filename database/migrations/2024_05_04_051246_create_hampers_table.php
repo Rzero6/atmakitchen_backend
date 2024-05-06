@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('nama');
             $table->string('rincian');
             $table->float('harga');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

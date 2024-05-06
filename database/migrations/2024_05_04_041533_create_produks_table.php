@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('harga');
             $table->string('jenis');
             $table->string('ukuran');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

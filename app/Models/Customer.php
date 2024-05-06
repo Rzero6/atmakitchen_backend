@@ -21,4 +21,8 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
+    public function alamat()
+    {
+        return $this->hasMany(Alamat::class, 'id_customer');
+    }
 }
