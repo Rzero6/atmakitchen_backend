@@ -14,6 +14,7 @@ class Produk extends Model
         'jenis',
         'harga',
         'stok',
+        'limit_po',
         'ukuran',
         'image',
     ];
