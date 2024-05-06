@@ -30,11 +30,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post("/customer/update/profil-pic/{id}", [CustomerController::class, "updateProfilPic"]);
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
+    Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index']);
 
-    Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
     Route::post('/bahanBaku', [BahanBakuController::class, 'store']);
     Route::get('/bahanBaku/{id}', [BahanBakuController::class, 'show']);
     Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
