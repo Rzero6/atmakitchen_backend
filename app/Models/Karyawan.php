@@ -18,4 +18,8 @@ class Karyawan extends Model
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
     }
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'id_karyawan');
+    }
 }

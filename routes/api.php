@@ -11,6 +11,7 @@ use App\Http\Controllers\api\PembelianBahanBakuController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\PenitipController;
+use App\Http\Controllers\api\PresensiController;
 use App\Http\Controllers\api\ProdukController;
 use App\Http\Controllers\api\ResepController;
 use App\Http\Controllers\api\resetPasswordController;
@@ -73,6 +74,11 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
     Route::get('/pengeluaran/{id}', [PengeluaranLainController::class, 'show']);
     Route::put('/pengeluaran/{id}', [PengeluaranLainController::class, 'update']);
     Route::delete('/pengeluaran/{id}', [PengeluaranLainController::class, 'destroy']);
+
+    Route::get('/presensi', [PresensiController::class, 'index']);
+    Route::post('/presensi', [PresensiController::class, 'store']);
+    Route::get('/presensi/hari-ini', [PresensiController::class, 'show']);
+    Route::put('/presensi/{id}', [PresensiController::class, 'update']);
 
     Route::post('/role', [RoleController::class, 'store']);
     Route::put('/role/{id}', [RoleController::class, 'update']);
