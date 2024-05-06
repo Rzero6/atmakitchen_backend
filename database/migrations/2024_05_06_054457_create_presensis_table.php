@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('presensis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_karyawan')->constrained('karyawans')->onDelete('cascade');
-            $table->timestamp('kehadiran')->nullable();
+            $table->date('tanggal');
+            $table->boolean('kehadiran');
             $table->timestamps();
         });
     }
