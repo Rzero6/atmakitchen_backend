@@ -47,7 +47,7 @@ class ProdukController extends Controller
                 'harga' => 'required',
                 'stok' => 'required',
                 'ukuran' => 'required|max:50',
-                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
@@ -88,7 +88,7 @@ class ProdukController extends Controller
                 'stok' => 'required',
                 'limit_po' => 'required',
                 'ukuran' => 'required|max:50',
-                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
