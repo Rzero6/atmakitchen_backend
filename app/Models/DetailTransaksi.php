@@ -11,12 +11,20 @@ class DetailTransaksi extends Model
     protected $fillable = [
         'id_transaksi',
         'id_produk',
+        'id_hampers',
         'jumlah',
-        'subtotal',
     ];
 
     public function transaksi()
     {
         return $this->belongsTo(Transaksi::class, 'id_transaksi', 'id');
+    }
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class, 'id_produk', 'id');
+    }
+    public function hampers()
+    {
+        return $this->belongsTo(Hampers::class, 'id_hampers', 'id');
     }
 }

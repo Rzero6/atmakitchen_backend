@@ -466,14 +466,12 @@ class DatabaseSeeder extends Seeder
             'id_produk' => 1,
             'id_hampers' => null,
             'jumlah' => 2,
-            'subtotal' => 100000,
         ]));
         DB::table('detail_transaksis')->insert(([
             'id_transaksi' => 1,
             'id_produk' => null,
             'id_hampers' => 2,
             'jumlah' => 1,
-            'subtotal' => 200000,
         ]));
     }
 }

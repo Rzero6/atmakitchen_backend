@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_hampers')->nullable();
             $table->foreign('id_hampers')->references('id')->on('hampers')->onDelete('cascade');
             $table->integer('jumlah');
-            $table->integer('subtotal');
             $table->timestamps();
         });
     }
