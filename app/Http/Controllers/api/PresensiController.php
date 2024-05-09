@@ -45,7 +45,7 @@ class PresensiController extends Controller
                     Presensi::create($presensiBaru);
                 }
             }
-            $presensi = Presensi::where('tanggal', Carbon::now()->toDateString())->get();
+            $presensi = Presensi::with('karyawan.user', 'karyawan.user.role')->where('tanggal', Carbon::now()->toDateString())->get();
 
             if (!$presensi) throw new \Exception("Presensi tidak ditemukan");
 
@@ -68,7 +68,7 @@ class PresensiController extends Controller
         try {
             $presensi = Presensi::find($id);
             if (!$presensi) throw new \Exception("Presensi tidak ditemukan");
-            $presensi->kehadiran = 0;
+            $presensi->kehadiran = !$presensi->kehadiran;
             $presensi->save();
             return response()->json([
                 "status" => true,

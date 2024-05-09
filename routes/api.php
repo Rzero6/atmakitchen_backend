@@ -26,12 +26,15 @@ Route::post("/admin/login", [AdminAuthController::class, "login"]);
 Route::post("/password/reset", [resetPasswordController::class, "requestResetPassword"]);
 Route::middleware('auth:api')->group(function () {
     Route::put("/password/update/{id}", [UserAuthController::class, "updatePassword"]);
+    Route::put("/profile/{id}", [UserAuthController::class, "update"]);
+
     Route::get("/customer/{id}", [CustomerController::class, "show"]);
     Route::post("/customer/update/profil-pic/{id}", [CustomerController::class, "updateProfilPic"]);
+
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
 
-    Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdCustomer"]);
+    Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdUser"]);
     Route::get("/transaksi/{id}", [TransaksiController::class, "show"]);
     Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
 });
@@ -79,7 +82,6 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
     Route::delete('/pengeluaran/{id}', [PengeluaranLainController::class, 'destroy']);
 
     Route::get('/presensi', [PresensiController::class, 'index']);
-    Route::post('/presensi', [PresensiController::class, 'store']);
     Route::get('/presensi/hari-ini', [PresensiController::class, 'show']);
     Route::put('/presensi/{id}', [PresensiController::class, 'update']);
 

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ResepController extends Controller
 {
-    public function index()
+    public function getProdukWithResep()
     {
         try {
             $produks = Produk::with('resep')->get();
@@ -28,7 +28,23 @@ class ResepController extends Controller
             ], 400);
         }
     }
-
+    public function index()
+    {
+        try {
+            $resep = Resep::all();
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil ambil data',
+                "data" => $resep
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

@@ -155,4 +155,55 @@ class UserAuthController extends Controller
             ], 400);
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $customer = User::find($id);
+
+            if (!$customer) throw new \Exception("Customer tidak ditemukan");
+            $updatedData = $request->all();
+
+            $currentEmail = $customer->email;
+            $emailValidationRule = $currentEmail === $updatedData['email'] ? 'required|email:rfc,dns' : 'required|email:rfc,dns|unique:users,email';
+
+            $validate = Validator::make($updatedData, [
+                'nama' => 'required|max:50',
+                'email' => $emailValidationRule,
+                'no_telepon' => 'required',
+            ]);
+            if ($validate->fails()) {
+                return response()->json(['message' => $validate->errors()], 400);
+            }
+
+            $customer->update($updatedData);
+
+            if ($currentEmail !== $updatedData['email']) {
+                $str = Str::random(100);
+                $details = [
+                    'username' => $customer->nama,
+                    'website' => 'Atma Kitchen',
+                    'datetime' => date('Y-m-d H:i:s'),
+                    'url' => request()->getHttpHost() . '/register/verify/' . $str
+                ];
+                Mail::to($customer->email)->send(new MailSend($details));
+                return response()->json([
+                    'message' => 'Link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk verifikasi.',
+                    'data' => $customer,
+                ], 200);
+            } else {
+                return response()->json([
+                    "status" => true,
+                    "message" => 'Berhasil update data',
+                    "data" => $customer
+                ], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
 }

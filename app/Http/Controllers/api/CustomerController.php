@@ -48,7 +48,7 @@ class CustomerController extends Controller
     public function show(string $id)
     {
         try {
-            $customer = Customer::where('id_user', $id)->first();
+            $customer = Customer::with('user')->where('id_user', $id)->first();
 
             if (!$customer) throw new \Exception("Data Customer tidak ditemukan");
 
