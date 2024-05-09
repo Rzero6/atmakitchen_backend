@@ -136,7 +136,7 @@ class UserAuthController extends Controller
                 'password' => 'required|min:8',
             ]);
             if ($validate->fails()) {
-                return response()->json(['message' => $validate->errors()], 400);
+                return response()->json(['message' => 'Password harus minimal 8 karakter'], 400);
             }
             $userData = [
                 'password' => bcrypt($updatedData['password'])
