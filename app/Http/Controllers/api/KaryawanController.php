@@ -17,7 +17,7 @@ class KaryawanController extends Controller
     {
         try {
 
-            $karyawan = User::where('id_role', '!=', 5)->get();
+            $karyawan = Karyawan::with('user','user.role')->get();
 
             return response()->json([
                 "status" => true,
