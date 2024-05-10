@@ -159,12 +159,12 @@ class UserAuthController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $customer = User::find($id);
+            $user = User::find($id);
 
-            if (!$customer) throw new \Exception("Customer tidak ditemukan");
+            if (!$user) throw new \Exception("Customer tidak ditemukan");
             $updatedData = $request->all();
 
-            $currentEmail = $customer->email;
+            $currentEmail = $user->email;
             $emailValidationRule = $currentEmail === $updatedData['email'] ? 'required|email:rfc,dns' : 'required|email:rfc,dns|unique:users,email';
 
             $validate = Validator::make($updatedData, [
@@ -175,27 +175,33 @@ class UserAuthController extends Controller
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-
-            $customer->update($updatedData);
+            $user->update($updatedData);
 
             if ($currentEmail !== $updatedData['email']) {
+                Customer::where('id_user', $user->id)->update([
+                    'email_verified_at' => null,
+                ]);
                 $str = Str::random(100);
                 $details = [
-                    'username' => $customer->nama,
+                    'username' => $user->nama,
                     'website' => 'Atma Kitchen',
                     'datetime' => date('Y-m-d H:i:s'),
                     'url' => request()->getHttpHost() . '/register/verify/' . $str
                 ];
-                Mail::to($customer->email)->send(new MailSend($details));
+                Customer::where('id_user', $user->id)->update([
+                    'verify_key' => $str,
+                ]);
+                Mail::to($user->email)->send(new MailSend($details));
                 return response()->json([
-                    'message' => 'Link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk verifikasi.',
-                    'data' => $customer,
+                    "status" => true,
+                    'message' => 'Berhasil update data dan email link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk verifikasi.',
+                    'data' => $user,
                 ], 200);
             } else {
                 return response()->json([
                     "status" => true,
                     "message" => 'Berhasil update data',
-                    "data" => $customer
+                    "data" => $user
                 ], 200);
             }
         } catch (\Exception $e) {

@@ -141,31 +141,37 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Box 20x20 cm',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Box 20x10 cm',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Botol 1 liter',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Box Premium',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Kartu Ucapan',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Tas Spunbond',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
 
         ///Penitip
