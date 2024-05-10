@@ -14,7 +14,7 @@ class PresensiController extends Controller
     public function index()
     {
         try {
-            $presensi = Presensi::with('karyawan')->get();
+            $presensi = Presensi::with('karyawan.user', 'karyawan.user.role')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
