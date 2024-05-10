@@ -130,22 +130,80 @@ class UserAuthController extends Controller
         try {
             $user = User::find($id);
 
-            if (!$user) throw new \Exception("Karyawan tidak ditemukan");
+            if (!$user) throw new \Exception("User tidak ditemukan");
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'password' => 'required|min:8',
             ]);
             if ($validate->fails()) {
-                return response()->json(['message' => $validate->errors()], 400);
+                return response()->json(['message' => 'Password harus minimal 8 karakter'], 400);
             }
             $userData = [
                 'password' => bcrypt($updatedData['password'])
             ];
-            $user->update($userData);
+            $user->password = $userData['password'];
+            $user->save();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ganti password',
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (!$user) throw new \Exception("Customer tidak ditemukan");
+            $updatedData = $request->all();
+
+            $currentEmail = $user->email;
+            $emailValidationRule = $currentEmail === $updatedData['email'] ? 'required|email:rfc,dns' : 'required|email:rfc,dns|unique:users,email';
+
+            $validate = Validator::make($updatedData, [
+                'nama' => 'required|max:50',
+                'email' => $emailValidationRule,
+                'no_telepon' => 'required',
+            ]);
+            if ($validate->fails()) {
+                return response()->json(['message' => $validate->errors()], 400);
+            }
+            $user->update($updatedData);
+
+            if ($currentEmail !== $updatedData['email']) {
+                Customer::where('id_user', $user->id)->update([
+                    'email_verified_at' => null,
+                ]);
+                $str = Str::random(100);
+                $details = [
+                    'username' => $user->nama,
+                    'website' => 'Atma Kitchen',
+                    'datetime' => date('Y-m-d H:i:s'),
+                    'url' => request()->getHttpHost() . '/register/verify/' . $str
+                ];
+                Customer::where('id_user', $user->id)->update([
+                    'verify_key' => $str,
+                ]);
+                Mail::to($user->email)->send(new MailSend($details));
+                return response()->json([
+                    "status" => true,
+                    'message' => 'Berhasil update data dan email link verifikasi telah dikirim ke email anda. Silahkan cek email anda untuk verifikasi.',
+                    'data' => $user,
+                ], 200);
+            } else {
+                return response()->json([
+                    "status" => true,
+                    "message" => 'Berhasil update data',
+                    "data" => $user
+                ], 200);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 "status" => false,

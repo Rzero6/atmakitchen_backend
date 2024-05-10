@@ -16,10 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penitip')->nullable();
             $table->foreign('id_penitip')->references('id')->on('penitips')->onDelete('cascade');
             $table->integer('stok');
+            $table->integer('limit_po')->nullable();
             $table->string('nama');
             $table->float('harga');
             $table->string('jenis');
             $table->string('ukuran');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

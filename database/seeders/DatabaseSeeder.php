@@ -141,31 +141,37 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Box 20x20 cm',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Box 20x10 cm',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Botol 1 liter',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Box Premium',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Kartu Ucapan',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Tas Spunbond',
             'stok' => 4000,
             'satuan' => 'pcs',
+            'packaging' => true,
         ]);
 
         ///Penitip
@@ -245,12 +251,22 @@ class DatabaseSeeder extends Seeder
             'saldo' => 0,
             'verify_key' => 'test',
         ]);
+        ///alamat
+        DB::table('alamats')->insert([
+            'id_customer' => 1,
+            'nama_penerima' => 'Test Nama Alamat',
+            'no_telepon' => '0812312231',
+            'kota' => 'Sleman',
+            'jalan' => 'Jalan Babarsari 123',
+            'rincian' => 'Rumah warna merah',
+        ]);
         //Produk
         DB::table('produks')->insert(([
             'nama' => 'Lapis Legit',
             'jenis' => 'Cake',
             'harga' => 850000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Satu Loyang',
         ]));
 
@@ -259,6 +275,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 450000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Setengah Loyang',
         ]));
 
@@ -267,6 +284,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 550000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Satu Loyang',
         ]));
 
@@ -275,6 +293,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 300000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Setengah Loyang',
         ]));
 
@@ -283,6 +302,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 250000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Satu Loyang',
         ]));
 
@@ -291,6 +311,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 150000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Setengah Loyang',
         ]));
 
@@ -299,6 +320,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 450000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Satu Loyang',
         ]));
 
@@ -307,6 +329,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 250000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Setengah Loyang',
         ]));
 
@@ -315,6 +338,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 350000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Satu Loyang',
         ]));
 
@@ -323,6 +347,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Cake',
             'harga' => 200000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Setengah Loyang',
         ]));
 
@@ -331,6 +356,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Roti',
             'harga' => 180000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Per Box (isi 10)',
         ]));
 
@@ -339,6 +365,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Roti',
             'harga' => 120000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Per Box (isi 10)',
         ]));
 
@@ -347,6 +374,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Roti',
             'harga' => 150000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Per Box (isi 10)',
         ]));
 
@@ -355,6 +383,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Minuman',
             'harga' => 75000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Per Liter',
         ]));
 
@@ -363,6 +392,7 @@ class DatabaseSeeder extends Seeder
             'jenis' => 'Minuman',
             'harga' => 100000,
             'stok' => 0,
+            'limit_po' => 10,
             'ukuran' => 'Per Liter',
         ]));
 
@@ -428,5 +458,26 @@ class DatabaseSeeder extends Seeder
             'harga' => 350000,
         ]));
 
+        DB::table('transaksis')->insert(([
+            'id_customer' => 1,
+            'id_alamat' => 1,
+            'tanggal_penerimaan' => '2024-04-24 16:00:00',
+            'status' => 'selesai',
+            'jarak' => 5,
+            'tip' => 50000,
+        ]));
+
+        DB::table('detail_transaksis')->insert(([
+            'id_transaksi' => 1,
+            'id_produk' => 1,
+            'id_hampers' => null,
+            'jumlah' => 2,
+        ]));
+        DB::table('detail_transaksis')->insert(([
+            'id_transaksi' => 1,
+            'id_produk' => null,
+            'id_hampers' => 2,
+            'jumlah' => 1,
+        ]));
     }
 }

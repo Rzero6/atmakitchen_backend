@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Penitip;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -17,7 +18,7 @@ class ProdukController extends Controller
     public function index()
     {
         try {
-            $produk = Produk::all();
+            $produk = Produk::with('penitip')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
@@ -46,14 +47,22 @@ class ProdukController extends Controller
                 'harga' => 'required',
                 'stok' => 'required',
                 'ukuran' => 'required|max:50',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
+
             $penitip = Penitip::find($storeData['id_penitip']);
             if (!$penitip)
                 throw new \Exception("Tidak ada penitip!");
-            $produk = Produk::create($request->all());
+
+            $uploadFolder = 'produk';
+            $image = $request->file('image');
+            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            $storeData['image'] = basename($image_uploaded_path);
+
+            $produk = Produk::create($storeData);
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',
@@ -67,6 +76,7 @@ class ProdukController extends Controller
             ], 400); //status code 400 = bad request
         }
     }
+
     public function storeTanpaPenitip(Request $request)
     {
         try {
@@ -76,12 +86,19 @@ class ProdukController extends Controller
                 'jenis' => 'required|max:50',
                 'harga' => 'required',
                 'stok' => 'required',
+                'limit_po' => 'required',
                 'ukuran' => 'required|max:50',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-            $produk = Produk::create($request->all());
+            $uploadFolder = 'produk';
+            $image = $request->file('image');
+            $image_uploaded_path = $image->store($uploadFolder, 'public');
+            $storeData['image'] = basename($image_uploaded_path);
+
+            $produk = Produk::create($storeData);
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',
@@ -119,7 +136,6 @@ class ProdukController extends Controller
                 "data" => []
             ], 400); //status code 400 = bad request
         }
-
     }
 
     /**
@@ -167,7 +183,12 @@ class ProdukController extends Controller
             $produk = Produk::find($id);
 
             if (!$produk) throw new \Exception("Produk tidak ditemukan");
-
+            if ($produk->image !== null) {
+                $filename = basename($produk->image);
+                if (Storage::disk('public')->exists('produk/' . $filename)) {
+                    Storage::disk('public')->delete('produk/' . $filename);
+                }
+            }
             $produk->delete();
             return response()->json([
                 "status" => true,
@@ -182,5 +203,4 @@ class ProdukController extends Controller
             ], 400); //status code 400 = bad request
         }
     }
-
 }

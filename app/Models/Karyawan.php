@@ -13,4 +13,13 @@ class Karyawan extends Model
         'gaji_harian',
         'bonus',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+    public function presensi()
+    {
+        return $this->hasMany(Presensi::class, 'id_karyawan');
+    }
 }

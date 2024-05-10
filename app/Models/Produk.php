@@ -14,9 +14,14 @@ class Produk extends Model
         'jenis',
         'harga',
         'stok',
+        'limit_po',
         'ukuran',
+        'image',
     ];
-
+    public function resep()
+    {
+        return $this->hasMany(Resep::class, 'id_produk');
+    }
     public function penitip()
     {
         return $this->belongsTo(Penitip::class, 'id_penitip');
