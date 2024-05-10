@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('stok');
             $table->string('satuan');
+            $table->boolean('packaging')->default(0);
             $table->timestamps();
         });
     }

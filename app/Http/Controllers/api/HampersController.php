@@ -60,7 +60,7 @@ class HampersController extends Controller
             $image_uploaded_path = $image->store($uploadFolder, 'public');
             $storeData['image'] = basename($image_uploaded_path);
 
-            $hampers = Hampers::create($request->all());
+            $hampers = Hampers::create($storeData);
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',

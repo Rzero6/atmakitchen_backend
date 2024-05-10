@@ -24,6 +24,13 @@ Route::post("/login", [UserAuthController::class, "login"]);
 Route::post("/register", [UserAuthController::class, "register"]);
 Route::post("/admin/login", [AdminAuthController::class, "login"]);
 Route::post("/password/reset", [resetPasswordController::class, "requestResetPassword"]);
+Route::get('/role', [RoleController::class, 'index']);
+Route::get('/role/{id}', [RoleController::class, 'show']);
+Route::get('/produk', [ProdukController::class, 'index']);
+Route::get('/produk/{id}', [ProdukController::class, 'show']);
+Route::get('/hampers', [HampersController::class, 'index']);
+Route::get('/hampers/{id}', [HampersController::class, 'show']);
+
 Route::middleware('auth:api')->group(function () {
     Route::put("/password/update/{id}", [UserAuthController::class, "updatePassword"]);
     Route::put("/profile/{id}", [UserAuthController::class, "update"]);
@@ -46,7 +53,7 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::put('/bahanBaku/{id}', [BahanBakuController::class, 'update']);
     Route::delete('/bahanBaku/{id}', [BahanBakuController::class, 'destroy']);
 
-    Route::post('/produk', [ProdukController::class, 'store']);
+    Route::post('/produk/penitip/', [ProdukController::class, 'store']);
     Route::post('/produk', [ProdukController::class, 'storeTanpaPenitip']);
     Route::put('/produk/{id}', [ProdukController::class, 'update']);
     Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
@@ -63,15 +70,12 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])->group(function () {
 
-    Route::get('/penitip', [PenitipController::class, 'index']);
     Route::post('/penitip', [PenitipController::class, 'store']);
     Route::get('/penitip/{id}', [PenitipController::class, 'show']);
     Route::put('/penitip/{id}', [PenitipController::class, 'update']);
     Route::delete('/penitip/{id}', [PenitipController::class, 'destroy']);
 
-    Route::get('/karyawan', [KaryawanController::class, 'index']);
     Route::post('/karyawan', [KaryawanController::class, 'store']);
-    Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
     Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
     Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
 
@@ -97,11 +101,11 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
 });
 
 Route::middleware(['auth:api', RoleMiddleware::class . ':Owner'])->group(function () {
-    Route::get('/karyawan/gaji-bonus/{id}', [KaryawanController::class, 'updateGajiBonus']);
+    Route::put('/karyawan/gaji-bonus/{id}', [KaryawanController::class, 'updateGajiBonus']);
 });
-Route::get('/role', [RoleController::class, 'index']);
-Route::get('/role/{id}', [RoleController::class, 'show']);
-Route::get('/produk', [ProdukController::class, 'index']);
-Route::get('/produk/{id}', [ProdukController::class, 'show']);
-Route::get('/hampers', [HampersController::class, 'index']);
-Route::get('/hampers/{id}', [HampersController::class, 'show']);
+
+Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional,Admin,Owner'])->group(function () {
+    Route::get('/karyawan', [KaryawanController::class, 'index']);
+    Route::get('/karyawan/{id}', [KaryawanController::class, 'show']);
+    Route::get('/penitip', [PenitipController::class, 'index']);
+});

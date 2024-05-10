@@ -18,7 +18,7 @@ class ProdukController extends Controller
     public function index()
     {
         try {
-            $produk = Produk::all();
+            $produk = Produk::with('penitip')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
