@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BahanBaku;
 use Illuminate\Http\Request;
 use App\Models\Resep;
 use App\Models\Produk;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ResepController extends Controller
 {
-    public function index()
+    public function getProdukWithResep()
     {
         try {
             $produks = Produk::with('resep')->get();
@@ -28,7 +29,23 @@ class ResepController extends Controller
             ], 400);
         }
     }
-
+    public function index()
+    {
+        try {
+            $resep = Resep::all();
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil ambil data',
+                "data" => $resep
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -45,7 +62,9 @@ class ResepController extends Controller
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $produk = Produk::find($storeData['id_produk']);
-            if (!$produk) throw new \Exception("Resep tidak ditemukan");
+            if (!$produk) throw new \Exception("Produk tidak ditemukan");
+            $bahan = BahanBaku::find($storeData['id_bahan_baku']);
+            if (!$bahan) throw new \Exception("BahanBaku tidak ditemukan");
             $resep = Resep::create($request->all());
             return response()->json([
                 "status" => true,
@@ -104,7 +123,7 @@ class ResepController extends Controller
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $produk = Produk::find($updatedData['id_produk']);
-            if (!$produk) throw new \Exception("Resep tidak ditemukan");
+            if (!$produk) throw new \Exception("Produk tidak ditemukan");
             $resep->update($updatedData);
             return response()->json([
                 "status" => true,
@@ -131,6 +150,27 @@ class ResepController extends Controller
             if (!$resep) throw new \Exception("Resep tidak ditemukan");
 
             $resep->delete();
+            return response()->json([
+                "status" => true,
+                "message" => 'Berhasil hapus data',
+                "data" => $resep
+            ], 200); //status code 200 = success
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => false,
+                "message" => $e->getMessage(),
+                "data" => []
+            ], 400); //status code 400 = bad request
+        }
+    }
+
+    public function destroyAllPerProduk($idProduk)
+    {
+        try {
+            $resep = Resep::where('id_produk', $idProduk)->get();
+            foreach ($resep as $item) {
+                $item->delete();
+            }
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil hapus data',

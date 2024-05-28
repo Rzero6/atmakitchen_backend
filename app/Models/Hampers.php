@@ -10,19 +10,12 @@ class Hampers extends Model
     use HasFactory;
     protected $fillable = [
         'nama',
-        'id_produk1',
-        'id_produk2',
-        'rincian',
         'harga',
         'image',
     ];
 
-    public function produk1()
+    public function detail_hampers()
     {
-        return $this->belongsTo(Produk::class, 'id_produk1');
-    }
-    public function produk2()
-    {
-        return $this->belongsTo(Produk::class, 'id_produk2');
+        return $this->hasMany(DetailHampers::class, 'id_hampers');
     }
 }

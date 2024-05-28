@@ -37,6 +37,7 @@ class PenitipController extends Controller
             $validate = Validator::make($storeData, [
                 'nama' => 'required|max:50',
                 'no_telp' => 'required|max:15',
+                'alamat' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
@@ -93,6 +94,7 @@ class PenitipController extends Controller
             $validate = Validator::make($updatedData, [
                 'nama' => 'required|max:50',
                 'no_telp' => 'required|max:15',
+                'alamat' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);

@@ -17,7 +17,7 @@ class HampersController extends Controller
     public function index()
     {
         try {
-            $hampers = Hampers::all();
+            $hampers = Hampers::with('detail_hampers')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
@@ -41,9 +41,6 @@ class HampersController extends Controller
             $storeData = $request->all();
             $validate = Validator::make($storeData, [
                 'nama' => 'required|max:50',
-                'id_produk1' => 'required|numeric',
-                'id_produk2' => 'required|numeric',
-                'rincian' => 'required',
                 'harga' => 'required',
                 'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
@@ -51,16 +48,12 @@ class HampersController extends Controller
                 return response()->json(['message' => $validate->errors()], 400);
             }
 
-            $produk = Produk::find($storeData['id_produk1']);
-            $produk2 = Produk::find($storeData['id_produk2']);
-            if (!$produk || !$produk2) throw new \Exception("Produk tidak ditemukan");
-
             $uploadFolder = 'hampers';
             $image = $request->file('image');
             $image_uploaded_path = $image->store($uploadFolder, 'public');
             $storeData['image'] = basename($image_uploaded_path);
 
-            $hampers = Hampers::create($request->all());
+            $hampers = Hampers::create($storeData);
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',
@@ -81,7 +74,7 @@ class HampersController extends Controller
     public function show(string $id)
     {
         try {
-            $hampers = Hampers::find($id);
+            $hampers = Hampers::find($id)->with('detail_hampers')->get();
 
             if (!$hampers) throw new \Exception("Data Hampers tidak ditemukan");
 
@@ -111,19 +104,11 @@ class HampersController extends Controller
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'nama' => 'required|max:50',
-                'id_produk1' => 'required|numeric',
-                'id_produk2' => 'required|numeric',
-                'rincian' => 'required',
                 'harga' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
             }
-
-            $produk = Produk::find($updatedData['id_produk1']);
-            $produk2 = Produk::find($updatedData['id_produk2']);
-            if (!$produk || !$produk2) throw new \Exception("Produk tidak ditemukan");
-
             $hampers->update($updatedData);
             return response()->json([
                 "status" => true,

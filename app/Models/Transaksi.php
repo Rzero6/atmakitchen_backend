@@ -15,6 +15,8 @@ class Transaksi extends Model
         'status',
         'jarak',
         'tip',
+        'total_harga',
+        'bukti_bayar',
     ];
     public function customer()
     {
@@ -23,5 +25,9 @@ class Transaksi extends Model
     public function alamat()
     {
         return $this->belongsTo(Alamat::class, 'id_alamat', 'id');
+    }
+    public function detail()
+    {
+        return $this->hasMany(DetailTransaksi::class, 'id_transaksi');
     }
 }

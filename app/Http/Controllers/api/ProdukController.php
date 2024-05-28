@@ -18,7 +18,7 @@ class ProdukController extends Controller
     public function index()
     {
         try {
-            $produk = Produk::all();
+            $produk = Produk::with('penitip')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
@@ -47,7 +47,7 @@ class ProdukController extends Controller
                 'harga' => 'required',
                 'stok' => 'required',
                 'ukuran' => 'required|max:50',
-                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
@@ -86,8 +86,9 @@ class ProdukController extends Controller
                 'jenis' => 'required|max:50',
                 'harga' => 'required',
                 'stok' => 'required',
+                'limit_po' => 'required',
                 'ukuran' => 'required|max:50',
-                'image' => 'required|image:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'image:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
