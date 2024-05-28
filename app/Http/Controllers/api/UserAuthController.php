@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailSend;
 
@@ -134,13 +135,16 @@ class UserAuthController extends Controller
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'password' => 'required|min:8',
+                'old_password' => 'required',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => 'Password harus minimal 8 karakter'], 400);
             }
             $userData = [
-                'password' => bcrypt($updatedData['password'])
+                'password' => bcrypt($updatedData['password']),
+                'old_password'  => bcrypt($updatedData['old_password']),
             ];
+            if (!Hash::check($request->old_password, $user->password)) throw new \Exception("Password lama salah");
             $user->password = $userData['password'];
             $user->save();
             return response()->json([

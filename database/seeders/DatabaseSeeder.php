@@ -80,12 +80,12 @@ class DatabaseSeeder extends Seeder
         DB::table('bahan_bakus')->insert([
             'nama' => 'Coklat Batang',
             'stok' => 50000,
-            'satuan' => 'gr',
+            'satuan' => 'pcs',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Minyak Goreng',
             'stok' => 5000,
-            'satuan' => 'gr',
+            'satuan' => 'ml',
         ]);
         DB::table('bahan_bakus')->insert([
             'nama' => 'Tepung Maizena',
@@ -178,10 +178,12 @@ class DatabaseSeeder extends Seeder
         DB::table('penitips')->insert([
             'nama' => 'Kripick Co.',
             'no_telp' => '08111701791',
+            'alamat' => 'Jalan Kripik 213',
         ]);
         DB::table('penitips')->insert([
             'nama' => 'Milky Yoghurty',
             'no_telp' => '08218899910',
+            'alamat' => 'Jalan Milk 123',
         ]);
         ///Karyawan
         DB::table('users')->insert([
@@ -436,26 +438,80 @@ class DatabaseSeeder extends Seeder
         //Produk Hampers
         DB::table('hampers')->insert(([
             'nama' => 'Paket A',
-            'id_produk1' => 2,
-            'id_produk2' => 6,
-            'rincian' => 'Lapis Legit Setengah Loyang + Brownies Setengah Loyang + Exclusice box and card',
             'harga' => 650000,
+        ]));
+
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 1,
+            'id_produk' => 2,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 1,
+            'id_produk' => 6,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 1,
+            'id_bahan_baku' => 25,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 1,
+            'id_bahan_baku' => 26,
+            'jumlah' => 1
         ]));
 
         DB::table('hampers')->insert(([
             'nama' => 'Paket B',
-            'id_produk1' => 4,
-            'id_produk2' => 11,
-            'rincian' => 'Lapis Surabaya Setengah Loyang + Roti Sosis + Exclusice box and card',
             'harga' => 500000,
+        ]));
+
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 2,
+            'id_produk' => 4,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 2,
+            'id_produk' => 11,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 2,
+            'id_bahan_baku' => 25,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 2,
+            'id_bahan_baku' => 26,
+            'jumlah' => 1
         ]));
 
         DB::table('hampers')->insert(([
             'nama' => 'Paket C',
-            'id_produk1' => 10,
-            'id_produk2' => 15,
-            'rincian' => 'Spikoe Setengah Loyang + Matcha Creamy Latte + Exclusice box and card',
             'harga' => 350000,
+        ]));
+
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 3,
+            'id_produk' => 10,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 3,
+            'id_produk' => 15,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 3,
+            'id_bahan_baku' => 25,
+            'jumlah' => 1
+        ]));
+        DB::table('detail_hampers')->insert(([
+            'id_hampers' => 3,
+            'id_bahan_baku' => 26,
+            'jumlah' => 1
         ]));
 
         DB::table('transaksis')->insert(([
@@ -465,6 +521,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'selesai',
             'jarak' => 5,
             'tip' => 50000,
+            'total_harga' => 500000,
         ]));
 
         DB::table('detail_transaksis')->insert(([

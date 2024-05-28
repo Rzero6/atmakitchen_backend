@@ -17,7 +17,7 @@ class KaryawanController extends Controller
     {
         try {
 
-            $karyawan = Karyawan::with('user','user.role')->get();
+            $karyawan = Karyawan::with('user', 'user.role')->get();
 
             return response()->json([
                 "status" => true,
@@ -139,7 +139,7 @@ class KaryawanController extends Controller
     public function updateGajiBonus(Request $request, $id)
     {
         try {
-            $karyawan = Karyawan::where('id_user', $id)->first();
+            $karyawan = Karyawan::find($id);
 
             if (!$karyawan) throw new \Exception("Karyawan tidak ditemukan");
             $updatedData = $request->all();
@@ -171,9 +171,9 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         try {
-            $karyawan = Karyawan::where('id_user', $id)->first();
+            $karyawan = Karyawan::where('id', $id)->first();
             if (!$karyawan) throw new \Exception("Karyawan tidak ditemukan");
-            $user = User::find($id);
+            $user = User::find($karyawan->user->id);
             if (!$user) throw new \Exception("User tidak ditemukan");
             $karyawan->delete();
             $user->delete();
