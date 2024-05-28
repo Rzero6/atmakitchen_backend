@@ -43,6 +43,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
 
     Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdUser"]);
+    Route::post("/transaksi/{id}", [TransaksiController::class, "uploadBuktiBayar"]);
     Route::get("/transaksi/{id}", [TransaksiController::class, "show"]);
     Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
 });
