@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('status');
             $table->integer('jarak');
             $table->float('tip');
+            $table->float('total_harga');
+            $table->string('bukti_bayar')->nullable();
             $table->timestamps();
         });
     }

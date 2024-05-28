@@ -15,6 +15,8 @@ class Transaksi extends Model
         'status',
         'jarak',
         'tip',
+        'total_harga',
+        'bukti_bayar',
     ];
     public function customer()
     {

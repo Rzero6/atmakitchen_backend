@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AdminAuthController;
 use App\Http\Controllers\api\BahanBakuController;
 use App\Http\Controllers\api\CustomerController;
+use App\Http\Controllers\api\DetailHampersController;
 use App\Http\Controllers\api\DetailTransaksiController;
 use App\Http\Controllers\api\KaryawanController;
 use App\Http\Controllers\api\PengeluaranLainController;
@@ -63,10 +64,14 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::get('/resep/{id}', [ResepController::class, 'show']);
     Route::put('/resep/{id}', [ResepController::class, 'update']);
     Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
+    Route::delete('/resep/produk/{idProduk}', [ResepController::class, 'destroyAllPerProduk']);
 
     Route::post('/hampers', [HampersController::class, 'store']);
     Route::put('/hampers/{id}', [HampersController::class, 'update']);
     Route::delete('/hampers/{id}', [HampersController::class, 'destroy']);
+
+    Route::post('/hampers/detail', [DetailHampersController::class, 'store']);
+    Route::delete('/hampers/{id}/detail', [DetailHampersController::class, 'destroyAllPerHampers']);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])->group(function () {
 

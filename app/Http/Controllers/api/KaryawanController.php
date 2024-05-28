@@ -171,9 +171,9 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         try {
-            $karyawan = Karyawan::where('id_user', $id)->first();
+            $karyawan = Karyawan::where('id', $id)->first();
             if (!$karyawan) throw new \Exception("Karyawan tidak ditemukan");
-            $user = User::find($id);
+            $user = User::find($karyawan->user->id);
             if (!$user) throw new \Exception("User tidak ditemukan");
             $karyawan->delete();
             $user->delete();
