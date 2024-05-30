@@ -14,7 +14,7 @@ class Hampers extends Model
         'image',
     ];
 
-    public function detail_hampers()
+    public function detailhampers()
     {
         return $this->hasMany(DetailHampers::class, 'id_hampers');
     }

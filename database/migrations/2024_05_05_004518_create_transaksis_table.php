@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_customer')->constrained('customers', 'id')->onDelete('cascade');
-            $table->foreignId('id_alamat')->constrained('alamats', 'id')->onDelete('cascade');
-            $table->timestamp('tanggal_penerimaan');
+            $table->unsignedBigInteger('id_alamat')->nullable();
+            $table->foreign('id_alamat')->references('id')->on('alamats')->onDelete('cascade');
+            $table->dateTime('tanggal_penerimaan');
             $table->string('status');
             $table->integer('jarak');
             $table->float('tip');

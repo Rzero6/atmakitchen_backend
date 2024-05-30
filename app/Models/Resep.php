@@ -18,7 +18,7 @@ class Resep extends Model
     {
         return $this->belongsTo(Produk::class, 'id_produk');
     }
-    public function bahan_baku()
+    public function bahanBaku()
     {
         return $this->belongsTo(BahanBaku::class, 'id_bahan_baku');
     }

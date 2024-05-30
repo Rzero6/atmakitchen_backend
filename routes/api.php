@@ -45,7 +45,9 @@ Route::middleware('auth:api')->group(function () {
     Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdUser"]);
     Route::post("/transaksi/{id}", [TransaksiController::class, "uploadBuktiBayar"]);
     Route::get("/transaksi/{id}", [TransaksiController::class, "show"]);
+    Route::put("/transaksi/{id}", [TransaksiController::class, "update"]);
     Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
+    Route::get("/transaksi/{date}", [TransaksiController::class, "checkStokProduk"]);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index']);
