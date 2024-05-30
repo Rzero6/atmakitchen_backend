@@ -17,7 +17,7 @@ class HampersController extends Controller
     public function index()
     {
         try {
-            $hampers = Hampers::with('detail_hampers')->get();
+            $hampers = Hampers::with('detailhampers')->get();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil ambil data',
@@ -74,7 +74,7 @@ class HampersController extends Controller
     public function show(string $id)
     {
         try {
-            $hampers = Hampers::find($id)->with('detail_hampers')->get();
+            $hampers = Hampers::find($id)->with('detailhampers')->get();
 
             if (!$hampers) throw new \Exception("Data Hampers tidak ditemukan");
 
