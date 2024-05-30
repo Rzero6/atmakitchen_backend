@@ -12,6 +12,7 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class TransaksiController extends Controller
 {
@@ -23,8 +24,10 @@ class TransaksiController extends Controller
             $tomorrow = $now->copy()->addDay();
             foreach ($transaksi as $trans) {
                 $tanggalPesanan = Carbon::parse($trans->tanggal_penerimaan);
-                if ($trans->status == "belum dibayar" && $tanggalPesanan->lt($now->subDays(2))) {
-                    $trans->status = "batal";
+                if (($trans->status == "belum dibayar" || $trans->status == "sudah dijarak")
+                    && $tanggalPesanan->lte($now->addDays(1)) && $now->gt($tanggalPesanan)
+                ) {
+                    $trans->status = "dibatalkan";
                     $trans->save();
                 }
                 if ($trans->status == "sedang dikirim kurir" && $tanggalPesanan->lt($now)) {
@@ -36,11 +39,11 @@ class TransaksiController extends Controller
                     $trans->save();
                 }
                 if ($trans->status == "diproses" && $tanggalPesanan->isSameDay($now)) {
-                    if ($trans->id_penitip) {
-                        $trans->status = "siap di-pickup";
+                    if ($trans->id_alamat) {
+                        $trans->status = "sedang dikirim kurir";
                         $trans->save();
                     } else {
-                        $trans->status = "sedang dikirim kurir";
+                        $trans->status = "siap di-pickup";
                         $trans->save();
                     }
                     foreach ($trans->detail as $detail_transaksi) {
@@ -163,10 +166,11 @@ class TransaksiController extends Controller
                 return response()->json(['message' => $validate->errors()], 400);
             }
             $transaksi->update($updatedData);
-            if ($transaksi->status == "diterima") {
+            if ($transaksi->status === "diterima") {
                 $customer = Customer::find($transaksi->id_customer);
                 $hmin3 = Carbon::now()->subDays(3);
                 $hmax3 = Carbon::now()->addDays(3);
+                $tanggal_lahir = Carbon::parse($customer->tanggal_lahir);
                 $poin = 0;
                 $dibayar = $transaksi->total_harga;
                 while ($dibayar >= 10000) {
@@ -187,11 +191,11 @@ class TransaksiController extends Controller
                         $poin += 1;
                     }
                 }
-                if ($customer->tanggal_lahir->beetwen($hmin3, $hmax3)) $poin = $poin * 2;
+                if ($tanggal_lahir->between($hmin3, $hmax3)) $poin = $poin * 2;
                 $customer->promo_poin += $poin;
                 $customer->save();
             }
-            if ($transaksi->status == "ditolak") {
+            if ($transaksi->status === "ditolak") {
                 $customer = Customer::find($transaksi->id_customer);
                 $customer->saldo = $transaksi->tip + $transaksi->total_harga;
                 $customer->save();
@@ -232,11 +236,11 @@ class TransaksiController extends Controller
                     $trans->save();
                 }
                 if ($trans->status == "diproses" && $tanggalPesanan->isSameDay($now)) {
-                    if ($trans->id_penitip) {
-                        $trans->status = "siap di-pickup";
+                    if ($trans->id_alamat) {
+                        $trans->status = "sedang dikirim kurir";
                         $trans->save();
                     } else {
-                        $trans->status = "sedang dikirim kurir";
+                        $trans->status = "siap di-pickup";
                         $trans->save();
                     }
                     foreach ($trans->detail as $detail_transaksi) {
