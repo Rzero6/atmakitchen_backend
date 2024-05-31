@@ -90,7 +90,7 @@ class TransaksiController extends Controller
             $validate = Validator::make($storeData, [
                 'id_customer' => 'required|numeric',
                 'id_alamat' => 'sometimes',
-                'tanggal_pesanan' => 'required|date',
+                'tanggal_penerimaan' => 'required|date_format:Y-m-d H:i:s',
             ]);
             if ($validate->fails()) {
                 return response()->json(['message' => $validate->errors()], 400);
@@ -98,8 +98,9 @@ class TransaksiController extends Controller
             $storeData['total_harga'] = 0;
             $storeData['tip'] = 0;
             $storeData['jarak'] = 0;
-            $storeData['status'] = "belum dibayar";
-
+            if (key_exists('id_alamat', $storeData))
+                $storeData['status'] = "belum dijarak";
+            else $storeData['status'] = "belum dibayar";
             $transaksi = Transaksi::create($storeData);
             return response()->json([
                 "status" => true,
@@ -110,7 +111,7 @@ class TransaksiController extends Controller
             return response()->json([
                 "status" => false,
                 "message" => $e->getMessage(),
-                "data" => []
+                "data" => $storeData
             ], 400); //status code 400 = bad request
         }
     }
