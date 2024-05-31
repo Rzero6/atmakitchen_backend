@@ -18,6 +18,7 @@ use App\Http\Controllers\api\ResepController;
 use App\Http\Controllers\api\resetPasswordController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\TransaksiController;
+use App\Http\Controllers\api\AlamatController;
 use App\Http\Controllers\api\UserAuthController;
 use App\Http\Middleware\RoleMiddleware;
 
@@ -40,6 +41,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post("/customer/update/profil-pic/{id}", [CustomerController::class, "updateProfilPic"]);
 
     Route::get('/transaksi', [TransaksiController::class, 'index']);
+    Route::post('/transaksi', [TransaksiController::class, 'store']);
+    Route::get('/alamat', [AlamatController::class, 'index']);
+
+    Route::post('/transaksi/detail', [DetailTransaksiController::class, 'store']);
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
 
     Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdUser"]);
