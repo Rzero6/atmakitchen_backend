@@ -11,5 +11,10 @@ class Penitip extends Model
     protected $fillable = [
         'nama',
         'no_telp',
+        'alamat',
     ];
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'id_penitip');
+    }
 }

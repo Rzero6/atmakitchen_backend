@@ -51,6 +51,8 @@ class PembelianBahanBakuController extends Controller
             if (!$bahanBaku) throw new \Exception("Bahan Baku tidak ditemukan");
 
             $pembelianBahan = PembelianBahanBaku::create($request->all());
+            $bahanBaku->stok += $pembelianBahan->jumlah;
+            $bahanBaku->save();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil insert data',
@@ -96,8 +98,7 @@ class PembelianBahanBakuController extends Controller
     {
         try {
             $data = PembelianBahanBaku::find($id);
-
-            if (!$data) throw new \Exception("Belum Ada Pembellian Bahan Baku");
+            if (!$data) throw new \Exception("Belum Ada Pembelian Bahan Baku");
             $updatedData = $request->all();
             $validate = Validator::make($updatedData, [
                 'id_bahanBaku' => 'required|numeric',
@@ -110,7 +111,10 @@ class PembelianBahanBakuController extends Controller
             }
             $bahanBaku = BahanBaku::find($updatedData['id_bahanBaku']);
             if (!$bahanBaku) throw new \Exception("Bahan Baku tidak ditemukan");
+            $bahanBaku->stok -= $data->jumlah;
+            $bahanBaku->stok += $updatedData['jumlah'];
             $data->update($updatedData);
+            $bahanBaku->save();
             return response()->json([
                 "status" => true,
                 "message" => 'Berhasil update data',
@@ -135,6 +139,9 @@ class PembelianBahanBakuController extends Controller
 
             if (!$data) throw new \Exception("Belum Ada Pembelian Bahan Baku");
 
+            $bahanBaku = BahanBaku::find($data->id_bahanBaku);
+            $bahanBaku->stok -= $data->jumlah;
+            $bahanBaku->save();
             $data->delete();
             return response()->json([
                 "status" => true,

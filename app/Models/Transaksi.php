@@ -11,10 +11,12 @@ class Transaksi extends Model
     protected $fillable = [
         'id_customer',
         'id_alamat',
-        'tanggal_pesanan',
+        'tanggal_penerimaan',
         'status',
         'jarak',
         'tip',
+        'total_harga',
+        'bukti_bayar',
     ];
     public function customer()
     {

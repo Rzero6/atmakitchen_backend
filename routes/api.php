@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\AdminAuthController;
 use App\Http\Controllers\api\BahanBakuController;
 use App\Http\Controllers\api\CustomerController;
+use App\Http\Controllers\api\DetailHampersController;
 use App\Http\Controllers\api\DetailTransaksiController;
 use App\Http\Controllers\api\KaryawanController;
 use App\Http\Controllers\api\PengeluaranLainController;
@@ -17,8 +18,11 @@ use App\Http\Controllers\api\ResepController;
 use App\Http\Controllers\api\resetPasswordController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\TransaksiController;
+use App\Http\Controllers\api\AlamatController;
+use App\Http\Controllers\api\HistoriSaldoController;
 use App\Http\Controllers\api\UserAuthController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Models\HistoriSaldo;
 
 Route::post("/login", [UserAuthController::class, "login"]);
 Route::post("/register", [UserAuthController::class, "register"]);
@@ -32,6 +36,11 @@ Route::get('/hampers', [HampersController::class, 'index']);
 Route::get('/hampers/{id}', [HampersController::class, 'show']);
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('/presensi', [PresensiController::class, 'index']);
+
+    Route::get('/pembelianBahan', [PembelianBahanBakuController::class, 'index']);
+    Route::get('/pengeluaran', [PengeluaranLainController::class, 'index']);
+
     Route::put("/password/update/{id}", [UserAuthController::class, "updatePassword"]);
     Route::put("/profile/{id}", [UserAuthController::class, "update"]);
 
@@ -39,11 +48,25 @@ Route::middleware('auth:api')->group(function () {
     Route::post("/customer/update/profil-pic/{id}", [CustomerController::class, "updateProfilPic"]);
 
     Route::get('/transaksi', [TransaksiController::class, 'index']);
+    Route::post('/transaksi', [TransaksiController::class, 'store']);
+    Route::get('/alamat', [AlamatController::class, 'index']);
+
+    Route::get('/saldo', [HistoriSaldoController::class, 'index']);
+    Route::post('/saldo', [HistoriSaldoController::class, 'store']);
+    Route::get('/saldo/{id}', [HistoriSaldoController::class, 'show']);
+    Route::put('/saldo/{id}', [HistoriSaldoController::class, 'update']);
+    Route::post('/saldo/{id}', [HistoriSaldoController::class, 'uploadBuktiTransfer']);
+    Route::delete('/saldo/{id}', [HistoriSaldoController::class, 'destroy']);
+
+    Route::post('/transaksi/detail', [DetailTransaksiController::class, 'store']);
     Route::get('/transaksi/{id}/detail', [DetailTransaksiController::class, 'showByTransaction']);
 
     Route::get("/customer/{id}/transaksi", [TransaksiController::class, "showByIdUser"]);
+    Route::post("/transaksi/{id}", [TransaksiController::class, "uploadBuktiBayar"]);
     Route::get("/transaksi/{id}", [TransaksiController::class, "show"]);
+    Route::put("/transaksi/{id}", [TransaksiController::class, "update"]);
     Route::get('/bahanBaku', [BahanBakuController::class, 'index']);
+    Route::get("/transaksi/{date}", [TransaksiController::class, "checkStokProduk"]);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(function () {
     Route::get('/customer', [CustomerController::class, 'index']);
@@ -63,10 +86,14 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Admin'])->group(functio
     Route::get('/resep/{id}', [ResepController::class, 'show']);
     Route::put('/resep/{id}', [ResepController::class, 'update']);
     Route::delete('/resep/{id}', [ResepController::class, 'destroy']);
+    Route::delete('/resep/produk/{idProduk}', [ResepController::class, 'destroyAllPerProduk']);
 
     Route::post('/hampers', [HampersController::class, 'store']);
     Route::put('/hampers/{id}', [HampersController::class, 'update']);
     Route::delete('/hampers/{id}', [HampersController::class, 'destroy']);
+
+    Route::post('/hampers/detail', [DetailHampersController::class, 'store']);
+    Route::delete('/hampers/{id}/detail', [DetailHampersController::class, 'destroyAllPerHampers']);
 });
 Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])->group(function () {
 
@@ -79,13 +106,11 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
     Route::put('/karyawan/{id}', [KaryawanController::class, 'update']);
     Route::delete('/karyawan/{id}', [KaryawanController::class, 'destroy']);
 
-    Route::get('/pengeluaran', [PengeluaranLainController::class, 'index']);
     Route::post('/pengeluaran', [PengeluaranLainController::class, 'store']);
     Route::get('/pengeluaran/{id}', [PengeluaranLainController::class, 'show']);
     Route::put('/pengeluaran/{id}', [PengeluaranLainController::class, 'update']);
     Route::delete('/pengeluaran/{id}', [PengeluaranLainController::class, 'destroy']);
 
-    Route::get('/presensi', [PresensiController::class, 'index']);
     Route::get('/presensi/hari-ini', [PresensiController::class, 'show']);
     Route::put('/presensi/{id}', [PresensiController::class, 'update']);
 
@@ -93,7 +118,6 @@ Route::middleware(['auth:api', RoleMiddleware::class . ':Manager Operasional'])-
     Route::put('/role/{id}', [RoleController::class, 'update']);
     Route::delete('/role/{id}', [RoleController::class, 'destroy']);
 
-    Route::get('/pembelianBahan', [PembelianBahanBakuController::class, 'index']);
     Route::post('/pembelianBahan', [PembelianBahanBakuController::class, 'store']);
     Route::get('/pembelianBahan/{id}', [PembelianBahanBakuController::class, 'show']);
     Route::put('/pembelianBahan/{id}', [PembelianBahanBakuController::class, 'update']);

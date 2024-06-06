@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hampers', function (Blueprint $table) {
+        Schema::create('histori_saldos', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->float('harga');
-            $table->string('image')->nullable();
+            $table->foreignId('id_customer')->constrained('customers', 'id')->onDelete('cascade');
+            $table->float('mutasi');
+            $table->boolean('status');
+            $table->string('tujuan');
+            $table->string('bukti_transfer')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hampers');
+        Schema::dropIfExists('histori_saldos');
     }
 };
