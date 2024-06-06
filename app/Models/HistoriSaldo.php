@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Alamat extends Model
+class HistoriSaldo extends Model
 {
     use HasFactory;
     protected $fillable = [
         'id_customer',
-        'nama_penerima',
-        'no_telepon',
-        'kota',
-        'jalan',
-        'rincian',
+        'mutasi',
+        'status',
+        'tujuan',
+        'bukti_transfer',
     ];
 
     public function customer()

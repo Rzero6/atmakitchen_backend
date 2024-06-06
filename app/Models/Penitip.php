@@ -13,4 +13,8 @@ class Penitip extends Model
         'no_telp',
         'alamat',
     ];
+    public function produk()
+    {
+        return $this->hasMany(Produk::class, 'id_penitip');
+    }
 }

@@ -45,7 +45,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function show(string $id)
+    public function show($id)
     {
         try {
             $customer = Customer::with('user')->where('id_user', $id)->first();
