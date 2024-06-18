@@ -225,7 +225,7 @@ class TransaksiController extends Controller
             foreach ($transaksi as $trans) {
                 $tanggalPesanan = Carbon::parse($trans->tanggal_penerimaan);
                 if ($trans->status == "belum dibayar" && $tanggalPesanan->lt($now->subDays(2))) {
-                    $trans->status = "batal";
+                    $trans->status = "dibatalkan";
                     $trans->save();
                 }
                 if ($trans->status == "sedang dikirim kurir" && $tanggalPesanan->lt($now)) {
